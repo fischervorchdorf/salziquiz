@@ -1,11 +1,1502 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salziquiz</title>
+    <title>🚀 Salzi-Quiz - Möge das Salz mit euch sein!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: #000;
+            overflow-x: hidden;
+        }
+
+        /* Starfield Background */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            z-index: -1;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .stars::before,
+        .stars::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            box-shadow: 
+                100px 200px #fff, 300px 100px #fff, 500px 300px #fff,
+                800px 150px #fff, 1000px 400px #fff, 200px 500px #fff,
+                600px 50px #fff, 900px 350px #fff, 150px 450px #fff,
+                400px 250px #fff, 700px 450px #fff, 250px 150px #fff,
+                50px 350px #fff, 850px 250px #fff, 450px 400px #fff,
+                650px 200px #fff, 950px 100px #fff, 350px 50px #fff,
+                550px 500px #fff, 750px 350px #fff, 1100px 200px #fff,
+                1200px 450px #fff, 100px 100px #fff, 300px 400px #fff;
+            animation: twinkle 3s infinite;
+        }
+
+        .stars::after {
+            width: 1px;
+            height: 1px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #FFD700;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #FFD700;
+            font-size: 1.8em;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
+        }
+
+        .header-cta {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .header-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+            padding: 60px 20px 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spaceship {
+            position: relative;
+            width: 80px;
+            height: 120px;
+            margin: 30px auto;
+            animation: float-ship 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+        }
+
+        /* Salzstreuer Körper */
+        .spaceship-body {
+            position: absolute;
+            width: 80px;
+            height: 100px;
+            background: linear-gradient(to bottom, #fff 0%, #e0e0e0 100%);
+            border-radius: 10px 10px 15px 15px;
+            border: 3px solid #FFD700;
+            box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Salzstreuer Deckel/Kopf */
+        .spaceship-head {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 30px;
+            background: linear-gradient(to bottom, #FFD700 0%, #FFA500 100%);
+            border-radius: 50% 50% 0 0;
+            border: 3px solid #FFD700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Löcher im Salzstreuer */
+        .salt-hole {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #666;
+            border-radius: 50%;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .salt-hole:nth-child(1) { top: 20px; left: 25px; }
+        .salt-hole:nth-child(2) { top: 20px; right: 25px; }
+        .salt-hole:nth-child(3) { top: 35px; left: 35px; }
+        .salt-hole:nth-child(4) { top: 50px; left: 20px; }
+        .salt-hole:nth-child(5) { top: 50px; right: 20px; }
+        .salt-hole:nth-child(6) { top: 65px; left: 35px; }
+
+        /* Triebwerk/Flammen */
+        .engine {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            background: linear-gradient(to bottom, 
+                #FFD700 0%,
+                #FF6B00 40%,
+                #FF0000 70%,
+                transparent 100%
+            );
+            border-radius: 50% 50% 50% 50% / 20% 20% 80% 80%;
+            animation: engine-fire 0.3s ease-in-out infinite;
+            filter: blur(3px);
+            opacity: 0.9;
+        }
+
+        .engine::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 40px;
+            background: linear-gradient(to bottom, 
+                #FFF 0%,
+                #FFD700 30%,
+                transparent 100%
+            );
+            border-radius: 50%;
+            animation: engine-fire-inner 0.2s ease-in-out infinite;
+        }
+
+        @keyframes float-ship {
+            0%, 100% { 
+                transform: translateY(0px) rotate(-2deg); 
+            }
+            50% { 
+                transform: translateY(-20px) rotate(2deg); 
+            }
+        }
+
+        @keyframes engine-fire {
+            0%, 100% { 
+                transform: translateX(-50%) scaleY(1);
+                opacity: 0.9;
+            }
+            50% { 
+                transform: translateX(-50%) scaleY(1.2);
+                opacity: 1;
+            }
+        }
+
+        @keyframes engine-fire-inner {
+            0%, 100% { 
+                opacity: 0.8;
+                height: 40px;
+            }
+            50% { 
+                opacity: 1;
+                height: 45px;
+            }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .force-tagline {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700; }
+            50% { text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700; }
+        }
+
+        .countdown-badge {
+            background: rgba(255,215,0,0.2);
+            backdrop-filter: blur(10px);
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            border: 2px solid #FFD700;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); border-color: #FFD700; }
+            50% { transform: scale(1.05); border-color: #FFA500; }
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+            color: #FFD700;
+            text-shadow: 0 0 20px #FFD700, 3px 3px 6px rgba(0,0,0,0.8);
+        }
+
+        .hero h1 .nowrap {
+            white-space: nowrap;
+        }
+
+        .hero p {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+            transition: all 0.3s;
+            margin: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.7);
+        }
+
+        .hero-cta.secondary {
+            background: transparent;
+            border: 3px solid #FFD700;
+            color: #FFD700;
+        }
+
+        /* Salt Tradition Section */
+        .salt-tradition {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px 20px;
+            border-top: 2px solid #FFD700;
+            border-bottom: 2px solid #FFD700;
+        }
+
+        .salt-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .salt-content h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #FFD700;
+        }
+
+        .salt-content p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        .salt-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        /* Quick Facts */
+        .quick-facts {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px 20px;
+            border-bottom: 2px solid #FFD700;
+        }
+
+        .quick-facts-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .fact-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #FFD700;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .fact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .fact-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .fact-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #FFD700;
+            margin-bottom: 5px;
+        }
+
+        .fact-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Section */
+        .section {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #FFD700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 215, 0, 0.05);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #FFD700;
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.5em;
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .feature-text {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        /* Important Notice Box */
+        .important-notice {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 1200px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notice-icon {
+            font-size: 4em;
+            flex-shrink: 0;
+        }
+
+        .notice-content h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .notice-content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        /* Prize Section */
+        .prizes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .prize-card {
+            background: rgba(255, 215, 0, 0.1);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid #FFD700;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .prize-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
+        }
+
+        .prize-card::before {
+            content: "✨";
+            position: absolute;
+            font-size: 150px;
+            opacity: 0.1;
+            top: -30px;
+            right: -30px;
+        }
+
+        .prize-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .prize-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+
+        .prize-description {
+            font-size: 1.1em;
+            color: #ccc;
+        }
+
+        /* Venue Section */
+        .venue-section {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 50px 20px;
+            border-top: 2px solid #FFD700;
+            border-bottom: 2px solid #FFD700;
+        }
+
+        .venue-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .venue-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            border: 2px solid #FFD700;
+        }
+
+        .venue-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .venue-info h2 {
+            font-size: 2.5em;
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .venue-detail {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .venue-detail-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: #FFD700;
+        }
+
+        /* Example Quiz */
+        .example-quiz {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 2px solid #FFD700;
+        }
+
+        .example-quiz h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #FFD700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .example-quiz p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #ccc;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .quiz-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.7);
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 215, 0, 0.05);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .testimonial-stars {
+            color: #FFD700;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        /* FAQ */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: rgba(255, 215, 0, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .faq-question {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .faq-answer {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 2px solid #FFD700;
+        }
+
+        .cta-section h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #FFD700;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 20px #FFD700;
+        }
+
+        .cta-section p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #ccc;
+        }
+
+        .cta-big-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            padding: 25px 60px;
+            font-size: 1.8em;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .cta-big-button:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Footer */
+        .footer {
+            background: #000;
+            color: white;
+            padding: 40px 20px 30px 20px;
+            text-align: center;
+            border-top: 2px solid #FFD700;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #FFD700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .footer-section p {
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #FFD700;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 2em;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: #FFD700;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+            text-shadow: 0 0 10px #FFD700;
+        }
+
+        .footer-force {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3em;
+            color: #FFD700;
+            margin-top: 30px;
+            text-shadow: 0 0 10px #FFD700;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            /* Header kompakter */
+            .header {
+                padding: 10px 0;
+            }
+
+            .logo {
+                font-size: 1.4em;
+            }
+
+            .header-cta {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+
+            /* Hero Section kompakt */
+            .hero {
+                padding: 30px 15px 25px 15px;
+            }
+
+            .force-tagline {
+                font-size: 1.2em;
+                margin-bottom: 15px;
+            }
+
+            /* Salzstreuer kleiner */
+            .spaceship {
+                width: 60px;
+                height: 90px;
+                margin: 20px auto;
+            }
+
+            .spaceship-body {
+                width: 60px;
+                height: 80px;
+            }
+
+            .spaceship-head {
+                top: -20px;
+                width: 40px;
+                height: 25px;
+            }
+
+            .salt-hole {
+                width: 6px;
+                height: 6px;
+            }
+
+            .salt-hole:nth-child(1) { top: 15px; left: 20px; }
+            .salt-hole:nth-child(2) { top: 15px; right: 20px; }
+            .salt-hole:nth-child(3) { top: 28px; left: 27px; }
+            .salt-hole:nth-child(4) { top: 40px; left: 15px; }
+            .salt-hole:nth-child(5) { top: 40px; right: 15px; }
+            .salt-hole:nth-child(6) { top: 52px; left: 27px; }
+
+            .engine {
+                bottom: -30px;
+                width: 25px;
+                height: 40px;
+            }
+
+            .countdown-badge {
+                padding: 10px 20px;
+                font-size: 0.9em;
+                margin-bottom: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+                margin-bottom: 15px;
+                line-height: 1.2;
+            }
+
+            .hero p {
+                font-size: 1em;
+                margin-bottom: 20px;
+            }
+
+            .hero-cta {
+                padding: 12px 25px;
+                font-size: 1em;
+                margin: 8px;
+                display: block;
+                width: calc(100% - 30px);
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* Salt Tradition kompakt */
+            .salt-tradition {
+                padding: 30px 15px;
+            }
+
+            .salt-icon {
+                font-size: 3em;
+                margin-bottom: 15px;
+            }
+
+            .salt-content h2 {
+                font-size: 1.8em;
+                margin-bottom: 15px;
+            }
+
+            .salt-content p {
+                font-size: 1em;
+            }
+
+            /* Quick Facts - 2 Spalten, kompakter */
+            .quick-facts {
+                padding: 20px 15px;
+            }
+
+            .quick-facts-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .fact-card {
+                padding: 15px 10px;
+            }
+
+            .fact-icon {
+                font-size: 2em;
+            }
+
+            .fact-title {
+                font-size: 0.9em;
+            }
+
+            .fact-value {
+                font-size: 1em;
+            }
+
+            /* Important Notice kompakt */
+            .important-notice {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+                margin: 20px 15px;
+            }
+
+            .notice-icon {
+                font-size: 2.5em;
+            }
+
+            .notice-content h3 {
+                font-size: 1.2em;
+                margin-bottom: 8px;
+            }
+
+            .notice-content p {
+                font-size: 0.9em;
+            }
+
+            /* Sections kompakter */
+            .section {
+                padding: 35px 15px;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+                margin-bottom: 12px;
+            }
+
+            .section-subtitle {
+                font-size: 1em;
+                margin-bottom: 20px;
+            }
+
+            /* Grids zu 1 Spalte */
+            .features-grid,
+            .prizes-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .feature-card,
+            .prize-card,
+            .testimonial-card {
+                padding: 20px;
+            }
+
+            .feature-icon,
+            .prize-icon {
+                font-size: 3em;
+            }
+
+            .feature-title,
+            .prize-title {
+                font-size: 1.3em;
+            }
+
+            /* Venue kompakt */
+            .venue-section {
+                padding: 35px 15px;
+            }
+
+            .venue-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .venue-image {
+                height: 200px;
+            }
+
+            .venue-info h2 {
+                font-size: 1.8em;
+                margin-bottom: 15px;
+            }
+
+            .venue-detail {
+                font-size: 1em;
+                margin-bottom: 15px;
+            }
+
+            /* Example Quiz kompakt */
+            .example-quiz {
+                padding: 35px 15px;
+            }
+
+            .example-quiz h2 {
+                font-size: 1.8em;
+                margin-bottom: 15px;
+            }
+
+            .example-quiz p {
+                font-size: 1em;
+                margin-bottom: 20px;
+            }
+
+            .quiz-button {
+                padding: 15px 35px;
+                font-size: 1.1em;
+                display: block;
+                width: calc(100% - 30px);
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* FAQ kompakt */
+            .faq-item {
+                padding: 18px;
+                margin-bottom: 15px;
+            }
+
+            .faq-question {
+                font-size: 1.1em;
+            }
+
+            .faq-answer {
+                font-size: 0.95em;
+            }
+
+            /* CTA Section kompakt */
+            .cta-section {
+                padding: 40px 15px;
+            }
+
+            .cta-section h2 {
+                font-size: 2em;
+                margin-bottom: 15px;
+            }
+
+            .cta-section p {
+                font-size: 1.1em;
+                margin-bottom: 25px;
+            }
+
+            .cta-big-button {
+                padding: 18px 40px;
+                font-size: 1.3em;
+                display: block;
+                width: calc(100% - 30px);
+                max-width: 320px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* Footer kompakt */
+            .footer {
+                padding: 30px 15px 20px 15px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                margin-bottom: 20px;
+            }
+
+            .footer-section h3 {
+                font-size: 1.3em;
+                margin-bottom: 12px;
+            }
+
+            .footer-section p {
+                font-size: 0.95em;
+            }
+
+            .social-links {
+                font-size: 1.8em;
+                gap: 15px;
+                margin-top: 15px;
+            }
+
+            .footer-force {
+                font-size: 1.1em;
+                margin-top: 20px;
+            }
+
+            /* Header Navigation vertikal */
+            .header-content {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        /* Extra kleine Bildschirme (unter 480px) */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.7em;
+                line-height: 1.2;
+            }
+
+            .force-tagline {
+                font-size: 1em;
+            }
+
+            .hero-cta {
+                font-size: 0.9em;
+                padding: 10px 20px;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .cta-section h2 {
+                font-size: 1.6em;
+            }
+
+            .cta-big-button {
+                font-size: 1.1em;
+                padding: 15px 30px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Salziquiz!!</h1>
+    <!-- Starfield Background -->
+    <div class="starfield">
+        <div class="stars"></div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">🚀 SALZI-QUIZ</div>
+            <a href="https://fischers-fischervorchdorf-quiz.site.builderallsite.com/anmeldung" target="_blank" class="header-cta">Jetzt Anmelden!</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="force-tagline">
+                ⭐ Möge das Salz mit euch sein! ⭐
+            </div>
+            
+            <div class="spaceship">
+                <div class="spaceship-head"></div>
+                <div class="spaceship-body">
+                    <div class="salt-hole"></div>
+                    <div class="salt-hole"></div>
+                    <div class="salt-hole"></div>
+                    <div class="salt-hole"></div>
+                    <div class="salt-hole"></div>
+                    <div class="salt-hole"></div>
+                </div>
+                <div class="engine"></div>
+            </div>
+            
+            <div class="countdown-badge">
+                ⏰ Nur noch 55 Tage bis zum Quiz-Event!
+            </div>
+            
+            <h1>Das ultimative <span class="nowrap">Salzi-Quiz!</span></h1>
+            <p>Spannung, Wissen & Teamgeist am 10. Dezember 2025</p>
+            
+            <a href="https://fischers-fischervorchdorf-quiz.site.builderallsite.com/anmeldung" target="_blank" class="hero-cta">🚀 Jetzt Platz sichern!</a>
+            <a href="#beispiel" class="hero-cta secondary">🎮 Beispiel-Quiz testen</a>
+        </div>
+    </section>
+
+    <!-- Salt Tradition Section -->
+    <section class="salt-tradition">
+        <div class="salt-content">
+            <div class="salt-icon">🧂</div>
+            <h2>Das weiße Gold des Salzkammerguts</h2>
+            <p>Seit Jahrhunderten prägt das Salz unsere Region. Vom kostbaren Handelsgut zur Grundlage ganzer Städte – das "weiße Gold" hat Geschichte geschrieben. Heute feiern wir diese Tradition auf spielerische Art: Beim Salzi-Quiz treffen Wissen, Teamgeist und die salzige Würze des Salzkammerguts aufeinander. Ein Quiz, das verbindet – genau wie das Salz unsere Region seit jeher verbindet!</p>
+        </div>
+    </section>
+
+    <!-- Quick Facts -->
+    <section class="quick-facts">
+        <div class="quick-facts-grid">
+            <div class="fact-card">
+                <div class="fact-icon">📅</div>
+                <div class="fact-title">Datum</div>
+                <div class="fact-value">10. Dezember 2025</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">🕐</div>
+                <div class="fact-title">Start</div>
+                <div class="fact-value">19:00 Uhr</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">📍</div>
+                <div class="fact-title">Location</div>
+                <div class="fact-value">GH Ziegelböck</div>
+            </div>
+            <div class="fact-card">
+                <div class="fact-icon">💰</div>
+                <div class="fact-title">Preis</div>
+                <div class="fact-value">€ 10 / Person</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Important Notice -->
+    <div class="important-notice">
+        <div class="notice-icon">📱🔋</div>
+        <div class="notice-content">
+            <h3>⚡ Wichtig: Vollgeladenes Gerät mitbringen!</h3>
+            <p>Bitte bringt ein <strong>vollgeladenes Smartphone oder Tablet</strong> mit! Jede Person spielt auf dem eigenen Gerät. Beide funktionieren perfekt – am Tablet im Quermodus sieht man die Fragen einfach etwas größer und komfortabler. <strong>Tipp:</strong> Powerbank mitnehmen für den Notfall! 😉</p>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <section class="section">
+        <h2 class="section-title">Was dich erwartet</h2>
+        <p class="section-subtitle">Ein unvergesslicher Abend voller Rätsel, Teamgeist und Spaß!</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3 class="feature-title">Spannung & Wissen</h3>
+                <p class="feature-text">Knifflige Fragen aus allen Bereichen – von Natur über Film bis zu kuriosen Alltagsfragen. Cleveres Kombinieren zählt genauso wie Wissen!</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3 class="feature-title">Teams & Stimmung</h3>
+                <p class="feature-text">In gemütlicher Pub-Quiz-Atmosphäre treten Teams (2-4 Personen) gegeneinander an. Gemeinsam tüfteln, lachen und diskutieren!</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3 class="feature-title">Wettkampf & Preise</h3>
+                <p class="feature-text">Sammelt Punkte und messt euch mit anderen Teams. Am Ende gibt es nicht nur einen Teamsieger, sondern auch einen cleveren Einzelgewinner!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prizes -->
+    <section class="section">
+        <h2 class="section-title">Edle Preise für die Besten!</h2>
+        <p class="section-subtitle">Exklusive Salz-Arrangements aus Slowenien & feine Tropfen warten auf euch</p>
+        
+        <div class="prizes-grid">
+            <div class="prize-card">
+                <div class="prize-icon">🥇</div>
+                <h3 class="prize-title">Sieger-Team</h3>
+                <p class="prize-description">Exklusives Salz-Arrangement aus Slowenien + Pokal + ewiger Ruhm!</p>
+            </div>
+            
+            <div class="prize-card">
+                <div class="prize-icon">🎯</div>
+                <h3 class="prize-title">Einzelsieger</h3>
+                <p class="prize-description">Edles Salz-Arrangement aus Slowenien + persönliche Urkunde</p>
+            </div>
+            
+            <div class="prize-card">
+                <div class="prize-icon">🍾</div>
+                <h3 class="prize-title">Platz 2 & 3</h3>
+                <p class="prize-description">Feine Weine oder Champagner für die Zweit- & Drittplatzierten</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Venue -->
+    <section class="venue-section">
+        <div class="venue-content">
+            <div class="venue-image">
+                <img src="https://lh3.googleusercontent.com/p/AF1QipOfLbJgzmXkXNmLS_DgWaiPyOEuPNOlIWO58bNY=s680-w680-h510" alt="Gasthaus Ziegelböck">
+            </div>
+            <div class="venue-info">
+                <h2>Gasthaus Ziegelböck</h2>
+                <div class="venue-detail">
+                    <span class="venue-detail-icon">📍</span>
+                    <div>
+                        <strong>Adresse:</strong><br>
+                        Schlossplatz 7<br>
+                        A-4655 Vorchdorf
+                    </div>
+                </div>
+                <div class="venue-detail">
+                    <span class="venue-detail-icon">🍽️</span>
+                    <div>
+                        <strong>Verpflegung:</strong><br>
+                        Getränke & Essen vor Ort verfügbar
+                    </div>
+                </div>
+                <div class="venue-detail">
+                    <span class="venue-detail-icon">🅿️</span>
+                    <div>
+                        <strong>Parken:</strong><br>
+                        Kostenlose Parkplätze direkt am Gasthaus
+                    </div>
+                </div>
+                <div class="venue-detail">
+                    <span class="venue-detail-icon">⏱️</span>
+                    <div>
+                        <strong>Dauer:</strong><br>
+                        Ca. 2-3 Stunden gemütliches Quiz
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example Quiz -->
+    <section class="example-quiz" id="beispiel">
+        <h2>🎮 Probiere das Quiz jetzt aus!</h2>
+        <p>Wir haben ein Beispielquiz vorbereitet! Teste alle Quizformate von Multiple-Choice über Paare bilden bis zu Kategorisieren. Wer die Formate schon kennt, geht beim echten Quiz entspannter an den Start!</p>
+        <a href="https://audience.ahaslides.com/407vp9dmhw" target="_blank" class="quiz-button">Beispiel-Quiz starten →</a>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+        <h2 class="section-title">Das sagen unsere Teilnehmer</h2>
+        <p class="section-subtitle">Echte Stimmen von echten Quiz-Fans!</p>
+        
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"Super Abend! Die Mischung aus kniffligen Fragen und lockerer Atmosphäre war perfekt. Wir kommen definitiv wieder!"</p>
+                <div class="testimonial-author">- Team "Die Wissbegierigen"</div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"Tolle Organisation, faire Regeln und richtig viel Spaß. Die verschiedenen Frageformate machen es abwechslungsreich!"</p>
+                <div class="testimonial-author">- Maria K.</div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"Bestes Pub-Quiz in der Region! Gemütliche Location, spannende Fragen und nette Leute. Absolut empfehlenswert!"</p>
+                <div class="testimonial-author">- Team "Quiz Masters"</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+        <h2 class="section-title">Häufig gestellte Fragen</h2>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">❓ Wie groß muss ein Team sein?</div>
+                <div class="faq-answer">Ein Team besteht aus 2 bis 4 Personen. Ihr könnt euch auch als Einzelperson anmelden und wir finden ein Team für euch!</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">❓ Brauche ich ein Smartphone oder Tablet?</div>
+                <div class="faq-answer">Ja! Jede Person spielt auf ihrem eigenen Gerät. Das macht es spannender und jeder kann mitmachen. <strong>WICHTIG: Bitte Gerät VOLLGELADEN mitbringen!</strong> Smartphone und Tablet funktionieren beide perfekt – am Tablet im Quermodus hast du die Fragen einfach etwas größer und komfortabler im Blick. Tipp: Eine Powerbank als Backup schadet nie! 😉<br><br><strong>ABER: Googeln ist streng verboten!</strong></div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">❓ Wie funktioniert das mit dem Schummeln?</div>
+                <div class="faq-answer">Fairness ist uns wichtig! Wer mit KI oder Google schummelt, wird sofort disqualifiziert. Das Quiz macht nur Spaß, wenn alle ehrlich spielen.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">❓ Gibt es eine Altersgrenze?</div>
+                <div class="faq-answer">Das Quiz ist für alle ab 16 Jahren geeignet.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">❓ Wie viele Plätze gibt es?</div>
+                <div class="faq-answer">Die Plätze sind begrenzt! Wenn es voll ist, ist es voll – also schnell sein lohnt sich!</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="cta-section">
+        <h2>🚀 Bereit fürs ultimative Quiz-Erlebnis?</h2>
+        <p>Sichere dir jetzt deinen Platz – die Tische sind begrenzt und das Event wird legendär!</p>
+        <a href="https://fischers-fischervorchdorf-quiz.site.builderallsite.com/anmeldung" target="_blank" class="cta-big-button">Jetzt Anmelden! 🚀</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Kontakt</h3>
+                    <p>📍 Schlossplatz 7<br>A-4655 Vorchdorf</p>
+                    <p>📧 <a href="mailto:fischervorchdorf@gmx.at">fischervorchdorf@gmx.at</a></p>
+                    <p>📞 <a href="tel:+436991227962">+43 699 12279626</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Salzi-Quiz</h3>
+                    <p><a href="#beispiel">Beispiel-Quiz</a></p>
+                    <p><a href="https://fischers-fischervorchdorf-quiz.site.builderallsite.com/anmeldung" target="_blank">Anmeldung</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Rechtliches</h3>
+                    <p><a href="#">Impressum</a></p>
+                    <p><a href="#">Datenschutz</a></p>
+                    <p><a href="#">AGB</a></p>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <a href="#">📘</a>
+                <a href="#">📷</a>
+                <a href="#">💬</a>
+            </div>
+            
+            <div class="footer-force">
+                ⭐ Möge das Salz mit euch sein! ⭐
+            </div>
+            
+            <p style="margin-top: 20px; opacity: 0.7; color: #ccc;">
+                © 2025 Salzi-Quiz | Alle Rechte vorbehalten
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Countdown Update
+        function updateCountdown() {
+            const eventDate = new Date('2025-12-10T19:00:00');
+            const now = new Date();
+            const diff = eventDate - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            
+            const badge = document.querySelector('.countdown-badge');
+            if (badge && days > 0) {
+                badge.textContent = `⏰ Nur noch ${days} Tage bis zum Quiz-Event!`;
+            }
+        }
+        
+        updateCountdown();
+    </script>
 </body>
 </html>
