@@ -1,11 +1,379 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anmeldung Salziquiz</title>
+    <title>Salziquiz Anmeldung - Gasthaus Ziegelböck</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            overflow-x: hidden !important;
+            height: auto !important;
+            min-height: 2600vh !important;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 2600vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header h2 {
+            font-size: 1.5em;
+            font-weight: normal;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+        
+        .info-box {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .info-item span {
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+        
+        .counter {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(76,175,80,0.4);
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .payment-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .payment-info h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .payment-info p {
+            color: #856404;
+            margin: 8px 0;
+            font-size: 1.05em;
+        }
+        
+        .iban {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            font-weight: bold;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+        
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-style: italic;
+            color: #0d47a1;
+        }
+        
+        .important-note {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            color: #c62828;
+        }
+
+        .device-notice {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+        }
+
+        .device-notice h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .device-notice p {
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+        
+        .form-container {
+            margin-top: 30px;
+            width: 100%;
+        }
+        
+        .form-container iframe {
+            width: 100% !important;
+            border: none !important;
+            min-height: 1800px !important;
+            height: 1800px !important;
+            display: block !important;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .header h2 {
+                font-size: 1.3em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+
+            .device-notice h3 {
+                font-size: 1.2em;
+            }
+
+            .device-notice p {
+                font-size: 1em;
+            }
+            
+            .iban {
+                font-size: 1em;
+                letter-spacing: 1px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .header h2 {
+                font-size: 1.2em;
+            }
+
+            .device-notice p {
+                font-size: 0.95em;
+            }
+
+            .form-container iframe {
+                min-height: 2200px !important;
+                height: 2200px !important;
+            }
+        }
+    </style>
 </head>
 <body>
-    <img src="bilder/image1.jpg" width="300px">
+    <div class="container">
+        <div class="header">
+            <h1>🎯 ANmeldung für Salziquiz</h1>
+            <h2>Gasthaus Ziegelböck</h2>
+            
+            <div class="info-box">
+                <div class="info-item">
+                    <span>📅</span>
+                    <strong>20. Jänner 2026</strong>
+                </div>
+                <div class="info-item">
+                    <span>🕖</span>
+                    <strong>Start: 19:00 Uhr</strong>
+                </div>
+                <div class="info-item">
+                    <span>⏱️</span>
+                    <strong>Dauer: ca. 2 Stunden</strong>
+                </div>
+            </div>
+            
+            <div class="counter">
+                ✅ Bereits <span id="teilnehmer">...</span> Personen angemeldet!
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="payment-info">
+                <h3>💰 Kosten & Zahlung</h3>
+                <p><strong>Preis pro Person: 10,00 €</strong></p>
+                <p>Bitte überweisen Sie den Betrag auf folgendes Konto:</p>
+                <div class="iban">AT80 3451 0000 0765 6465</div>
+            </div>
+            
+            <div class="note">
+                <strong>🍽️ Hinweis zur Verpflegung:</strong><br>
+                Sie können gerne vorher Speisen konsumieren. Während des Quiz wird sich Essen nicht ausgehen, da die Pausen dafür nicht ausreichen werden.
+            </div>
+            
+            <div class="important-note">
+                <strong>📋 Anmeldung empfohlen!</strong><br>
+                Wir bitten um Anmeldung, da wir nicht unendlich Teilnehmer aufnehmen können - die Plätze sind durch die verfügbaren Tische limitiert. Natürlich ist auch jeder herzlich willkommen, der spontan teilnehmen möchte, wenn noch Platz vorhanden ist.
+            </div>
+
+            <div class="device-notice">
+                <h3>📱🔋 Wichtig: Vollgeladenes Gerät mitbringen!</h3>
+                <p>Bitte bringt am Quiz-Abend ein <strong>vollgeladenes Smartphone oder Tablet</strong> mit! Jede Person spielt auf dem eigenen Gerät. Beide funktionieren perfekt – am Tablet im Quermodus sieht man die Fragen einfach etwas größer und komfortabler. <strong>Tipp:</strong> Eine Powerbank als Backup schadet nie! 😉</p>
+            </div>
+            
+            <div class="form-container">
+                <iframe id="quiz-form" src="https://docs.google.com/forms/d/e/1FAIpQLSemYOfTkW6SCB1O5vTPCg6TFzpnIiKfyY7zLTwaisH2s4jicw/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Wird geladen…</iframe>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 🔥 NUCLEAR OPTION: Finde und ändere ALLE Parent-Container
+        function forceFullHeight() {
+            try {
+                // Finde das aktuelle HTML/Body Element
+                let currentElement = document.body;
+                
+                // Gehe alle Parent-Elemente durch bis zum <html>
+                while (currentElement && currentElement.parentElement) {
+                    currentElement = currentElement.parentElement;
+                    
+                    // Erzwinge volle Höhe für ALLE Container
+                    if (currentElement.style) {
+                        currentElement.style.height = 'auto';
+                        currentElement.style.minHeight = '100%';
+                        currentElement.style.maxHeight = 'none';
+                        currentElement.style.overflow = 'visible';
+                    }
+                }
+                
+                // Zusätzlich: Finde alle Builderall-spezifischen Container
+                const possibleContainers = [
+                    'div[class*="builder"]',
+                    'div[class*="element"]',
+                    'div[class*="container"]',
+                    'div[style*="height"]'
+                ];
+                
+                possibleContainers.forEach(selector => {
+                    document.querySelectorAll(selector).forEach(el => {
+                        if (el.contains(document.body)) {
+                            el.style.height = 'auto';
+                            el.style.minHeight = '2500px';
+                            el.style.maxHeight = 'none';
+                            el.style.overflow = 'visible';
+                        }
+                    });
+                });
+                
+                console.log('✅ Parent-Container Höhe erzwungen');
+            } catch (e) {
+                console.error('Fehler beim Setzen der Container-Höhe:', e);
+            }
+        }
+        
+        // Setze iframe-Höhe
+        function setIframeHeight() {
+            const iframe = document.getElementById('quiz-form');
+            if (iframe) {
+                const isMobile = window.innerWidth <= 600;
+                const height = isMobile ? '2200px' : '1800px';
+                
+                iframe.style.height = height;
+                iframe.style.minHeight = height;
+                iframe.style.width = '100%';
+                iframe.style.display = 'block';
+                
+                console.log('✅ iframe-Höhe gesetzt auf:', height);
+            }
+        }
+        
+        // Führe alle Fixes aus
+        function runAllFixes() {
+            forceFullHeight();
+            setIframeHeight();
+        }
+        
+        // Sofort ausführen
+        runAllFixes();
+        
+        // Nach dem Laden
+        window.addEventListener('load', function() {
+            runAllFixes();
+            // Nochmal nach 500ms (manchmal lädt Builderall langsam)
+            setTimeout(runAllFixes, 500);
+            setTimeout(runAllFixes, 1000);
+        });
+        
+        // Bei Größenänderung
+        window.addEventListener('resize', runAllFixes);
+        
+        // Lade die aktuelle Teilnehmerzahl
+        fetch('https://script.google.com/macros/s/AKfycbx2arECShWfnCall6XkA7gCiojAMF2x4F0aYTHkDYpbd78saTVVyt5K-Ejm1ltio7vT4w/exec')
+            .then(response => response.text())
+            .then(zahl => {
+                document.getElementById('teilnehmer').textContent = zahl;
+            })
+            .catch(error => {
+                console.error('Fehler beim Laden der Teilnehmerzahl:', error);
+                document.getElementById('teilnehmer').textContent = '6+';
+            });
+    </script>
 </body>
 </html>
