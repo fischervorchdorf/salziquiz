@@ -3,88 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impressum - Salzi-Quiz</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+    <title>Impressum - SalziQuiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Fredoka', 'Comic Sans MS', 'Trebuchet MS', 'Arial Rounded MT Bold', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #fff;
+            background: #000;
+            overflow-x: hidden;
+        }
+
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            z-index: -1;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .stars::before,
+        .stars::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            box-shadow: 
+                100px 200px #fff, 300px 100px #fff, 500px 300px #fff,
+                800px 150px #fff, 1000px 400px #fff, 200px 500px #fff,
+                600px 50px #fff, 900px 350px #fff, 150px 450px #fff,
+                400px 250px #fff, 700px 450px #fff, 250px 150px #fff;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 30px 20px;
-            text-align: center;
-            color: white;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            border-bottom: 2px solid #FFD700;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #FFD700;
+            font-size: 1.8em;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #FFD700;
+        }
+
+        .back-link {
+            color: #FFD700;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #FFD700;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 40px auto;
             padding: 40px;
-            background: white;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #FFD700;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #FFD700;
+        }
+
+        .subtitle {
+            color: #FFA500;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-style: italic;
         }
 
         h2 {
-            color: #667eea;
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.8em;
-            margin-top: 30px;
-            margin-bottom: 15px;
+            color: #FFD700;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
             padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
-        }
-
-        h2:first-of-type {
-            margin-top: 0;
         }
 
         h3 {
-            color: #764ba2;
+            color: #FFA500;
             font-size: 1.3em;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            margin-top: 25px;
+            margin-bottom: 15px;
         }
 
         p {
             margin-bottom: 15px;
-            line-height: 1.8;
+            color: #ccc;
         }
 
-        .info-block {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 5px solid #667eea;
-        }
-
-        .info-block p {
-            margin-bottom: 8px;
-        }
-
-        .info-block strong {
-            color: #667eea;
-            display: inline-block;
-            min-width: 150px;
+        strong {
+            color: #FFD700;
         }
 
         a {
-            color: #667eea;
+            color: #FFD700;
             text-decoration: none;
         }
 
@@ -92,43 +162,46 @@
             text-decoration: underline;
         }
 
-        .back-link {
+        .info-block {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid #FFD700;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .info-block p {
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .info-block strong {
+            color: #FFD700;
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 30px;
-            transition: transform 0.3s;
-        }
-
-        .back-link:hover {
-            transform: scale(1.05);
-            text-decoration: none;
-        }
-
-        .note {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-size: 0.95em;
+            min-width: 150px;
         }
 
         .footer {
             text-align: center;
             padding: 30px 20px;
-            color: #666;
+            color: #999;
             font-size: 0.9em;
+            margin-top: 40px;
         }
 
         @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
             .container {
-                padding: 20px;
                 margin: 20px;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
             }
 
             h2 {
@@ -144,12 +217,20 @@
     </style>
 </head>
 <body>
+    <div class="starfield"></div>
+    <div class="stars"></div>
+
     <div class="header">
-        <h1>📄 Impressum</h1>
-        <p>Informationspflicht gemäß §5 E-Commerce-Gesetz, §14 Unternehmensgesetzbuch und §63 Gewerbeordnung</p>
+        <div class="header-content">
+            <div class="logo">📄 SalziQuiz</div>
+            <a href="salziquiz.html" class="back-link">← Zurück zur Hauptseite</a>
+        </div>
     </div>
 
     <div class="container">
+        <h1>Impressum</h1>
+        <p class="subtitle">Informationspflicht gemäß §5 E-Commerce-Gesetz, §14 Unternehmensgesetzbuch und §63 Gewerbeordnung</p>
+
         <h2>Angaben gemäß § 5 ECG</h2>
         
         <div class="info-block">
@@ -164,7 +245,6 @@
             <p><strong>E-Mail:</strong> <a href="mailto:fischervorchdorf@gmx.at">fischervorchdorf@gmx.at</a></p>
         </div>
 
-        
         <h2>Unternehmensgegenstand</h2>
         <p>Organisation und Durchführung von Quiz-Veranstaltungen</p>
 
@@ -175,7 +255,7 @@
         </div>
 
         <h2>Berufsrecht</h2>
-        <p>Gewerbeordnung: <a href="https://www.ris.bka.gv.at" target="">www.ris.bka.gv.at</a></p>
+        <p>Gewerbeordnung: <a href="https://www.ris.bka.gv.at" target="_blank">www.ris.bka.gv.at</a></p>
 
         <h2>Online-Streitbeilegung</h2>
         <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:</p>
@@ -206,14 +286,11 @@
         <h2>Datenschutz</h2>
         <p>Informationen zum Datenschutz und zur Verarbeitung personenbezogener Daten finden Sie in unserer separaten <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
 
-        <div style="text-align: center; margin-top: 40px;">
-            <a href="salziquiz.html" class="back-link">← Zurück zur Hauptseite</a>
+        <div class="footer">
+            <p>Stand: November 2024</p>
+            <p>© 2024 Salzi-Quiz | Alle Rechte vorbehalten</p>
         </div>
     </div>
 
-    <div class="footer">
-        <p>Stand: November 2024</p>
-        <p>© 2024 Salzi-Quiz | Alle Rechte vorbehalten</p>
-    </div>
 </body>
 </html>

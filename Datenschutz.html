@@ -3,84 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datenschutzerklärung - Salzi-Quiz</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+    <title>Datenschutzerklärung - SalziQuiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Fredoka', 'Comic Sans MS', 'Trebuchet MS', 'Arial Rounded MT Bold', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #fff;
+            background: #000;
+            overflow-x: hidden;
+        }
+
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            z-index: -1;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .stars::before,
+        .stars::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            box-shadow: 
+                100px 200px #fff, 300px 100px #fff, 500px 300px #fff,
+                800px 150px #fff, 1000px 400px #fff, 200px 500px #fff,
+                600px 50px #fff, 900px 350px #fff, 150px 450px #fff,
+                400px 250px #fff, 700px 450px #fff, 250px 150px #fff;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 30px 20px;
-            text-align: center;
-            color: white;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            border-bottom: 2px solid #FFD700;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #FFD700;
+            font-size: 1.8em;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #FFD700;
+        }
+
+        .back-link {
+            color: #FFD700;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #FFD700;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 40px auto;
             padding: 40px;
-            background: white;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            color: #FFD700;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #FFD700;
+        }
+
+        .subtitle {
+            color: #FFA500;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .version {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 40px;
         }
 
         h2 {
-            color: #667eea;
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.8em;
-            margin-top: 30px;
-            margin-bottom: 15px;
+            color: #FFD700;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
             padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
-        }
-
-        h2:first-of-type {
-            margin-top: 0;
         }
 
         h3 {
-            color: #764ba2;
+            color: #FFA500;
             font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #FFD700;
+            font-size: 1.1em;
             margin-top: 20px;
             margin-bottom: 10px;
         }
 
         p {
             margin-bottom: 15px;
-            line-height: 1.8;
+            color: #ccc;
         }
 
         ul, ol {
-            margin-bottom: 15px;
             margin-left: 30px;
+            margin-bottom: 20px;
+            color: #ccc;
         }
 
         li {
-            margin-bottom: 8px;
-            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #FFD700;
         }
 
         .info-block {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 5px solid #667eea;
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
         }
 
         .info-block p {
@@ -88,121 +189,157 @@
         }
 
         .info-block strong {
-            color: #667eea;
-            display: inline-block;
-            min-width: 150px;
-        }
-
-        a {
-            color: #667eea;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .back-link {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 30px;
-            transition: transform 0.3s;
-        }
-
-        .back-link:hover {
-            transform: scale(1.05);
-            text-decoration: none;
-        }
-
-        .note {
-            background: #d1ecf1;
-            border: 2px solid #0c5460;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-size: 0.95em;
+            color: #FFD700;
         }
 
         .highlight-box {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border: 3px solid #667eea;
+            background: rgba(255, 215, 0, 0.1);
+            border: 3px solid #FFD700;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
         }
 
         .highlight-box h3 {
             margin-top: 0;
-            color: #667eea;
+            color: #FFD700;
         }
 
-        .footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: #666;
-            font-size: 0.9em;
+        .highlight-box ul {
+            margin-top: 15px;
+        }
+
+        .notice {
+            background: rgba(255, 165, 0, 0.1);
+            border-left: 4px solid #FFA500;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .notice strong {
+            font-size: 1.1em;
+            color: #FFD700;
+        }
+
+        a {
+            color: #FFD700;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        a:hover {
+            border-bottom: 1px solid #FFD700;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 25px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
         }
 
         table th,
         table td {
-            padding: 12px;
+            padding: 15px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
         }
 
         table th {
-            background: #667eea;
-            color: white;
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
             font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
         }
 
         table tr:hover {
-            background: #f8f9fa;
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-size: 0.9em;
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
+            margin-top: 40px;
+        }
+
+        .footer a {
+            color: #FFD700;
+        }
+
+        .contact-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .contact-box h3 {
+            margin-top: 0;
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 20px;
                 margin: 20px;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
             }
 
             h2 {
                 font-size: 1.5em;
             }
 
-            .info-block strong {
-                min-width: auto;
-                display: block;
-                margin-bottom: 5px;
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            table th,
+            table td {
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="starfield">
+        <div class="stars"></div>
+    </div>
+
     <div class="header">
-        <h1>🔒 Datenschutzerklärung</h1>
-        <p>Informationen zum Datenschutz gemäß DSGVO</p>
+        <div class="header-content">
+            <div class="logo">🚀 SALZI-QUIZ</div>
+            <a href="index.html" class="back-link">← Zurück zur Startseite</a>
+        </div>
     </div>
 
     <div class="container">
+        <h1>🔒 Datenschutzerklärung</h1>
+        <p class="subtitle">Informationen zum Datenschutz gemäß DSGVO</p>
+        <p class="version">Stand: Januar 2025</p>
+
         <h2>1. Datenschutz auf einen Blick</h2>
         
         <h3>Allgemeine Hinweise</h3>
         <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie unsere Website besuchen oder sich für unsere Quiz-Veranstaltung anmelden. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
 
         <div class="highlight-box">
-            <h3>Wichtig zu wissen:</h3>
+            <h3>⭐ Wichtig zu wissen:</h3>
             <ul>
                 <li>Ihre Daten werden nur für die Organisation des Salzi-Quiz verwendet</li>
                 <li>Wir geben Ihre Daten nicht an Dritte weiter</li>
@@ -215,7 +352,7 @@
         
         <div class="info-block">
             <p><strong>Verantwortlich</strong> für die Datenverarbeitung auf dieser Website ist:</p>
-            <p><strong>Name:</strong> Martin Fischer</p>
+            <p><strong>Name:</strong> Mag. Martin Fischer</p>
             <p><strong>Adresse:</strong> Schlossplatz 7<br>A-4655 Vorchdorf<br>Österreich</p>
             <p><strong>Telefon:</strong> <a href="tel:+436991227962">+43 699 12279626</a></p>
             <p><strong>E-Mail:</strong> <a href="mailto:fischervorchdorf@gmx.at">fischervorchdorf@gmx.at</a></p>
@@ -361,7 +498,7 @@
             Österreich</p>
             <p><strong>Telefon:</strong> +43 1 52 152-0<br>
             <strong>E-Mail:</strong> <a href="mailto:dsb@dsb.gv.at">dsb@dsb.gv.at</a><br>
-            <strong>Website:</strong> <a href="https://www.dsb.gv.at" target="">www.dsb.gv.at</a></p>
+            <strong>Website:</strong> <a href="https://www.dsb.gv.at" target="_blank">www.dsb.gv.at</a></p>
         </div>
 
         <h2>8. Weitergabe von Daten an Dritte</h2>
@@ -411,7 +548,7 @@
         <p>Cookies sind kleine Textdateien, die auf Ihrem Endgerät gespeichert werden und die Ihr Browser speichert. Sie dienen dazu, unser Angebot nutzerfreundlicher zu gestalten.</p>
 
         <h3>Unsere Cookie-Nutzung</h3>
-        <p>Diese Website verwendet aktuell keine Cookies. Sollte sich dies ändern, werden wir Sie darüber informieren und Ihre Einwilligung einholen.</p>
+        <p>Diese Website verwendet Cookies, um Ihnen das beste Erlebnis zu bieten. Beim ersten Besuch erscheint ein Cookie-Banner, über das Sie Ihre Einwilligung erteilen können. Weitere Informationen finden Sie in unserem Cookie-Banner.</p>
 
         <h2>12. SSL- bzw. TLS-Verschlüsselung</h2>
         
@@ -437,7 +574,7 @@
         
         <p>Wir verwenden für unser Beispiel-Quiz die Plattform AhaSlides. Wenn Sie auf den Link zum Beispiel-Quiz klicken, werden Sie zu einer externen Website weitergeleitet.</p>
 
-        <div class="note">
+        <div class="notice">
             <strong>⚠️ Wichtig:</strong> Für das externe Beispiel-Quiz gelten die Datenschutzbestimmungen von AhaSlides. Wir haben keinen Einfluss auf die Datenverarbeitung durch AhaSlides.
         </div>
 
@@ -455,17 +592,35 @@
 
         <p>Für Ihren erneuten Besuch gilt dann die neue Datenschutzerklärung.</p>
 
-        <p><strong>Stand dieser Datenschutzerklärung:</strong> November 2024</p>
+        <div class="contact-box">
+            <h3>📞 Kontakt bei Datenschutzfragen</h3>
+            <p>Bei Fragen zum Datenschutz kontaktieren Sie uns gerne:</p>
+            <p>
+                <strong>Mag. Martin Fischer</strong><br>
+                Schlossplatz 7<br>
+                4655 Vorchdorf<br>
+                Österreich
+            </p>
+            <p>
+                📧 E-Mail: <a href="mailto:fischervorchdorf@gmx.at">fischervorchdorf@gmx.at</a><br>
+                📱 Telefon: <a href="tel:+436991227962">+43 699 12279626</a>
+            </p>
+        </div>
 
-        <div style="text-align: center; margin-top: 40px;">
-            <a href="salziquiz.html" class="back-link">← Zurück zur Hauptseite</a>
+        <div class="notice" style="margin-top: 40px;">
+            <strong>⭐ Möge das Salz mit euch sein! ⭐</strong><br>
+            Ihre Daten sind bei uns sicher!
+        </div>
+
+        <div class="footer">
+            <p><strong>Stand dieser Datenschutzerklärung:</strong> Januar 2025</p>
+            <p style="margin-top: 20px;">
+                © 2025 SalziQuiz - Mag. Martin Fischer | 
+                <a href="impressum.html">Impressum</a> | 
+                <a href="agb.html">AGB</a>
+            </p>
         </div>
     </div>
 
-    <div class="footer">
-        <p>Bei Fragen zum Datenschutz kontaktieren Sie uns gerne:</p>
-        <p><a href="mailto:fischervorchdorf@gmx.at">fischervorchdorf@gmx.at</a> | <a href="tel:+436991227962">+43 699 12279626</a></p>
-        <p style="margin-top: 20px;">© 2024 Salzi-Quiz | <a href="impressum.html">Impressum</a></p>
-    </div>
 </body>
 </html>
